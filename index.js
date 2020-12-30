@@ -7,6 +7,11 @@ let delayInput = document.getElementById('delay');
 if (delay)
 	delayInput.value = delay;
 
+function setDelay() {
+	delay = delayInput.value ? parseInt(delayInput.value) : 0;
+	localStorage.delay = delay;
+}
+
 function setTimer(event) {
 	event.preventDefault();
 	let minutes = parseInt(event.target.elements['minutes'].value);
@@ -16,9 +21,14 @@ function setTimer(event) {
 	event.target.reset();
 }
 
-function setDelay() {
-	delay = delayInput.value ? parseInt(delayInput.value) : 0;
-	localStorage.delay = delay;
+function adjustDelay(event) {
+	event.preventDefault();
+	let difference = parseInt(event.target.elements['difference'].value);
+	delayInput.value = delay + difference;
+	setDelay();
+	timer -= difference * 1000;
+	localStorage.timer = timer;
+	event.target.reset();
 }
 
 setInterval(function() {
