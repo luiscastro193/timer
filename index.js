@@ -1,6 +1,6 @@
 "use strict";
-let delay = localStorage.delay ? parseInt(localStorage.delay) : 0;
-let timer = localStorage.timer ? parseFloat(localStorage.timer) : null;
+let delay = localStorage.delay ? parseFloat(localStorage.delay) : 0;
+let timer = localStorage.timer ? parseInt(localStorage.timer) : null;
 let timerElement = document.getElementById('timer');
 let delayInput = document.getElementById('delay');
 
