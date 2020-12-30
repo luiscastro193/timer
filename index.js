@@ -1,6 +1,6 @@
 "use strict";
 let delay = localStorage.delay ? parseInt(localStorage.delay) : 0;
-let timer = localStorage.timer ? parseInt(localStorage.timer) : null;
+let timer = localStorage.timer ? parseFloat(localStorage.timer) : null;
 let timerElement = document.getElementById('timer');
 let delayInput = document.getElementById('delay');
 
@@ -8,7 +8,7 @@ if (delay)
 	delayInput.value = delay;
 
 function setDelay() {
-	delay = delayInput.value ? parseInt(delayInput.value) : 0;
+	delay = delayInput.value ? parseFloat(delayInput.value) : 0;
 	localStorage.delay = delay;
 }
 
@@ -23,7 +23,7 @@ function setTimer(event) {
 
 function adjustDelay(event) {
 	event.preventDefault();
-	let difference = parseInt(event.target.elements['difference'].value);
+	let difference = parseFloat(event.target.elements['difference'].value);
 	delayInput.value = delay + difference;
 	setDelay();
 	timer -= difference * 1000;
@@ -31,11 +31,15 @@ function adjustDelay(event) {
 	event.target.reset();
 }
 
-setInterval(function() {
+function updateTimer() {
 	if (timer) {
 		let currentTime = (Date.now() - timer) / 1000 - delay;
 		let minutes = Math.floor(currentTime / 60);
 		let seconds = Math.floor(currentTime % 60).toString().padStart(2, '0');
 		timerElement.textContent = `${minutes}:${seconds}`;
 	}
-}, 10);
+	
+	requestAnimationFrame(updateTimer);
+}
+
+requestAnimationFrame(updateTimer);
