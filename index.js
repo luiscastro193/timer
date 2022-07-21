@@ -34,8 +34,8 @@ function adjustDelay(event) {
 function updateTimer() {
 	if (timer) {
 		let currentTime = (Date.now() - timer) / 1000 - delay;
-		let minutes = Math.floor(currentTime / 60);
-		let seconds = Math.floor(currentTime % 60).toString().padStart(2, '0');
+		let minutes = Math.trunc(currentTime / 60);
+		let seconds = Math.trunc(currentTime % 60).toString().padStart(2, '0');
 		timerElement.textContent = `${minutes}:${seconds}`;
 	}
 	
