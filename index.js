@@ -1,21 +1,21 @@
 "use strict";
-let delay = localStorage.delay ? parseFloat(localStorage.delay) : 0;
-let timer = localStorage.timer ? parseInt(localStorage.timer) : null;
+let delay = localStorage.delay ? Number(localStorage.delay) : 0;
+let timer = localStorage.timer ? Number(localStorage.timer) : null;
 let timerElement = document.getElementById('timer');
 let delayInput = document.getElementById('delay');
 
 if (delay)
-	delayInput.value = delay;
+	delayInput.valueAsNumber = delay;
 
 function setDelay() {
-	delay = delayInput.value ? parseFloat(delayInput.value) : 0;
+	delay = delayInput.value ? delayInput.valueAsNumber : 0;
 	localStorage.delay = delay;
 }
 
 function setTimer(event) {
 	event.preventDefault();
-	let minutes = parseInt(event.target.elements['minutes'].value);
-	let seconds = parseInt(event.target.elements['seconds'].value);
+	let minutes = event.target.elements['minutes'].valueAsNumber;
+	let seconds = event.target.elements['seconds'].valueAsNumber;
 	timer = Date.now() - (minutes * 60 + seconds + delay) * 1000;
 	localStorage.timer = timer;
 	event.target.reset();
@@ -23,8 +23,8 @@ function setTimer(event) {
 
 function adjustDelay(event) {
 	event.preventDefault();
-	let difference = parseFloat(event.target.elements['difference'].value);
-	delayInput.value = delay + difference;
+	let difference = event.target.elements['difference'].valueAsNumber;
+	delayInput.valueAsNumber = delay + difference;
 	setDelay();
 	timer -= difference * 1000;
 	localStorage.timer = timer;
